@@ -1,0 +1,104 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>
+
+
+struct x {
+    char nome[50];
+    char end[50];
+    float precoM;
+    char tipoC[50];
+    struct x* proximo;
+};
+
+
+struct x* solicitarDadosRestaurante() {
+	setlocale(LC_ALL,"portuguese");
+    struct x* restaurante = (struct x*)malloc(sizeof(struct x));
+
+    printf("Nome do restaurante: ");
+    scanf("%s", restaurante->nome);
+
+    printf("Endereço: ");
+    scanf("%s", restaurante->end);
+
+    printf("Preço médio: ");
+    scanf("%f", &(restaurante->precoM));
+
+    printf("Tipo de comida: ");
+    scanf("%s", restaurante->tipoC);
+
+    restaurante->proximo = NULL;
+
+    return restaurante;
+}
+
+void adicionarRestaurante(struct x** lista) {
+    struct x* restaurante = solicitarDadosRestaurante();
+
+    if (*lista == NULL) {
+        *lista = restaurante;
+    } else {
+        struct x* atual = *lista;
+        while (atual->proximo != NULL) {
+            atual = atual->proximo;
+        }
+        atual->proximo = restaurante;
+    }
+
+    printf("Sucesso!\n");
+}
+
+
+void listarRestaurantes(struct x* lista) {
+	setlocale(LC_ALL,"portuguese");
+    if (lista == NULL) {
+        printf("Nenhum restaurante foi cadastrado.\n");
+    } else {
+        struct x* atual = lista;
+        while (atual != NULL) {
+            printf("Nome: %s\n", atual->nome);
+            printf("Endereço: %s\n", atual->end);
+            printf("Preço médio: %.2f\n", atual->precoM);
+            printf("Tipo de comida: %s\n", atual->tipoC);
+            printf("\n");
+
+            atual = atual->proximo;
+        }
+    }
+}
+
+int main() {
+	setlocale(LC_ALL,"portuguese");
+    struct x* lista = NULL;
+    int opcao;
+
+    do {
+        printf("Selecione uma opção:\n");
+        printf("1 - Adicionar restaurante\n");
+        printf("2 - Listar restaurantes\n");
+        printf("0 - Sair\n");
+        printf("Opção: ");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1:
+                adicionarRestaurante(&lista);
+                break;
+            case 2:
+                listarRestaurantes(lista);
+                break;
+            case 0:
+                printf("Encerrando sessão\n");
+                break;
+            default:
+                printf("Opção inválida!\n");
+                break;
+        }
+
+        printf("\n");
+    } while (opcao != 0);
+
+    return 0;
+}
