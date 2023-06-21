@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+
+typedef struct dieta {
+    char nome[100];
+    float peso;
+    int calorias;
+    struct dieta* prox;
+} Dieta;
+
+void solicitarDados(Dieta* d) {
+    printf("Digite o nome da comida: ");
+    scanf(" %[^\n]s", d->nome);
+    printf("Digite o peso da porção: ");
+    scanf("%f", &(d->peso));
+    printf("Digite o número de calorias: ");
+    scanf("%d", &(d->calorias));
+}
+
+void listarDietas(Dieta* inicio) {
+    Dieta* atual = inicio;
+    while (atual != NULL) {
+        printf("\nComida: %s\n", atual->nome);
+        printf("Peso da porção: %.1f\n", atual->peso);
+        printf("Número de calorias: %d\n", atual->calorias);
+        atual = atual->prox;
+    }
+}
+
+int main() {
+	
+	setlocale(LC_ALL,"");
+    Dieta* inicio = NULL;
+    int opcao;
+
+    do {
+        printf("1.Adicionar dieta\n");
+        printf("2. Listar dietas\n");
+        printf("3. Sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1: {
+                Dieta* nova = (Dieta*)malloc(sizeof(Dieta));
+                solicitarDados(nova);
+                nova->prox = inicio;
+                inicio = nova;
+                break;
+            }
+            case 2: {
+                listarDietas(inicio);
+                break;
+            }
+        }
+    } while (opcao != 3);
+
+    return 0;
+}
