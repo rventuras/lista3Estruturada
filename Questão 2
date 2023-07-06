@@ -40,7 +40,10 @@ int main() {
         printf("3. Sair\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
-
+        
+        system ("cls");
+        
+        
         switch (opcao) {
             case 1: {
                 Dieta* nova = (Dieta*)malloc(sizeof(Dieta));
