@@ -63,6 +63,8 @@ void listarRestaurantes(struct x* lista) {
             printf("Preço médio: %.2f\n", atual->precoM);
             printf("Tipo de comida: %s\n", atual->tipoC);
             printf("\n");
+            
+        
 
             atual = atual->proximo;
         }
@@ -81,7 +83,10 @@ int main() {
         printf("0 - Sair\n");
         printf("Opção: ");
         scanf("%d", &opcao);
-
+        
+            system ("cls");
+        
+        
         switch (opcao) {
             case 1:
                 adicionarRestaurante(&lista);
